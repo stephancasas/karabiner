@@ -1,0 +1,34 @@
+{
+    "title": "[User] App/iTerm 2",
+    "rules": [
+        {
+            "description": "App/iTerm 2: Clear Buffer",
+            "manipulators": [
+                {
+                    "type": "basic",
+                    "from": {
+                        "key_code": "f10"
+                    },
+                    "conditions": [
+                        {
+                            "type": "frontmost_application_if",
+                            "description": "iTerm 2",
+                            "bundle_identifiers": [
+                                "^com\\.googlecode\\.iterm2$"
+                            ]
+                        }
+                    ],
+                    "to": [
+                        {
+                            "modifiers": [
+                                "left_gui"
+                            ],
+                            "key_code": "k"
+                        }
+                    ],
+                    "description": "F10 → 'Clear Buffer'"
+                }
+            ]
+        }
+    ]
+}

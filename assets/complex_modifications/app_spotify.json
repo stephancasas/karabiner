@@ -1,0 +1,36 @@
+{
+    "title": "[User] App/Spotify",
+    "rules": [
+        {
+            "manipulators": [
+                {
+                    "description": "Command-W → 'Return to Previous Context'",
+                    "type": "basic",
+                    "from": {
+                        "key_code": "w",
+                        "modifiers": {
+                            "mandatory": [
+                                "left_gui"
+                            ]
+                        }
+                    },
+                    "conditions": [
+                        {
+                            "type": "frontmost_application_if",
+                            "description": "Spotify",
+                            "bundle_identifiers": [
+                                "^com\\.spotify\\.client$"
+                            ]
+                        }
+                    ],
+                    "to": [
+                        {
+                            "shell_command": "/Users/stephancasas/.config/karabiner/scripts/spotify_return_to_context.jxa"
+                        }
+                    ]
+                }
+            ],
+            "description": "App/Spotify: Overrides"
+        }
+    ]
+}

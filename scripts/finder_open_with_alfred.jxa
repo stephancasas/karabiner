@@ -1,0 +1,10 @@
+#!/usr/bin/env osascript -l JavaScript
+
+function run(_) {
+  const App = Application.currentApplication();
+  App.includeStandardAdditions = true;
+
+  Application('Alfred').runTrigger('openwith', {
+    inWorkflow: 'com.stephancasas.AlfredAutomations',
+  });
+}

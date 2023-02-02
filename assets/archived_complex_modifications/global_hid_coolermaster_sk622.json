@@ -1,0 +1,58 @@
+{
+  "title": "[User] Global|HID/CoolerMaster SK622",
+  "rules": [
+    {
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "grave_accent_and_tilde",
+            "modifiers": {
+              "mandatory": ["left_shift"]
+            }
+          },
+          "to": [
+            {
+              "key_code": "grave_accent_and_tilde",
+              "repeat": false
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "grave_accent_and_tilde",
+            "modifiers": {
+              "mandatory": ["right_shift"]
+            }
+          },
+          "to": [
+            {
+              "key_code": "grave_accent_and_tilde",
+              "modifiers": ["right_shift"],
+              "repeat": false
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": { "key_code": "escape" },
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "description": "BoostNote",
+              "bundle_identifiers": ["^com.boostio.boostnote$"]
+            }
+          ],
+          "to": [
+            {
+              "key_code": "grave_accent_and_tilde",
+              "repeat": false
+            }
+          ]
+        }
+      ],
+      "description": "Global|HID/CoolerMaster SK622: Esc/Grave Accent/Tilde"
+    }
+  ]
+}

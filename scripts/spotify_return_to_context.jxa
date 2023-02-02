@@ -1,0 +1,10 @@
+#!/usr/bin/env osascript -l JavaScript
+
+function run(argv) {
+	const app = Application('System Events').applicationProcesses.byName('Spotify');
+	// return to last context
+	app.visible = false;
+	// umount window to prevent locking instance to desktop index
+	// app.windows.at(0).buttons.at(0).actions.byName('AXPress').perform();
+}
+

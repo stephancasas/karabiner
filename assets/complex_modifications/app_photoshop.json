@@ -1,0 +1,34 @@
+{
+    "title": "[User] App/Photoshop",
+    "rules": [
+        {
+            "manipulators": [
+                {
+                    "description": "Scroll Click as Modifier 1",
+                    "type": "basic",
+                    "from": {
+                        "pointing_button": "button3"
+                    },
+                    "to_if_held_down": [
+                        {
+                            "key_code": "spacebar"
+                        }
+                    ]
+                },
+                {
+                    "description": "Scroll Click as Modifier 2",
+                    "type": "basic",
+                    "from": {
+                        "pointing_button": "button3"
+                    },
+                    "to_if_held_down": [
+                        {
+                            "pointing_button": "button1"
+                        }
+                    ]
+                }
+            ],
+            "description": "App/Photoshop: Scroll-click → Pan"
+        }
+    ]
+}

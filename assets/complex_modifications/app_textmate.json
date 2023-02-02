@@ -1,0 +1,52 @@
+{
+    "title": "[User] App/TextMate",
+    "rules": [
+        {
+            "description": "App/TextMate: Beautify/Minify",
+            "manipulators": [
+                {
+                    "type": "basic",
+                    "from": {
+                        "key_code": "f10"
+                    },
+                    "conditions": [
+                        {
+                            "type": "frontmost_application_if",
+                            "description": "TextMate",
+                            "bundle_identifiers": [
+                                "^com\\.macromates\\.TextMate$"
+                            ]
+                        }
+                    ],
+                    "to": [
+                        {
+                            "shell_command": "/Users/stephancasas/.config/karabiner/scripts/textmate_format.jxa beautify"
+                        }
+                    ],
+                    "description": "F10 → 'Beautify Document by Context'"
+                },
+                {
+                    "type": "basic",
+                    "from": {
+                        "key_code": "f19"
+                    },
+                    "conditions": [
+                        {
+                            "type": "frontmost_application_if",
+                            "description": "TextMate",
+                            "bundle_identifiers": [
+                                "^com\\.macromates\\.TextMate$"
+                            ]
+                        }
+                    ],
+                    "to": [
+                        {
+                            "shell_command": "/Users/stephancasas/.config/karabiner/scripts/textmate_format.jxa minify"
+                        }
+                    ],
+                    "description": "F11 (as F19) → 'Minify Document by Context'"
+                }
+            ]
+        }
+    ]
+}

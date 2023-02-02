@@ -1,0 +1,18 @@
+#!/usr/bin/env osascript -l JavaScript
+
+function run(_) {
+  const tinkerwell =
+    Application('System Events').applicationProcesses.byName('Tinkerwell');
+
+  tinkerwell.frontmost = true;
+
+  const actionMenuItem = tinkerwell.menuBars
+    .at(0)
+    .menuBarItems.byName('Action');
+  const actionMenu = actionMenuItem.menus.at(0);
+  const prettify = actionMenu.menuItems.byName('Prettify PHP');
+
+  actionMenuItem.click();
+  prettify.click();
+}
+

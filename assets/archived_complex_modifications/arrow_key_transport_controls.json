@@ -1,0 +1,95 @@
+{
+    "title": "Arrow Keys to Transport Controls",
+    "rules": [
+        {
+            "description": "Change Arrow Keys to Media Transport Controls",
+            "manipulators": [
+                {
+                    "from": {
+                        "key_code": "left_arrow"
+                    },
+                    "to": [
+                        {
+                            "consumer_key_code": "rewind"
+                        }
+                    ],
+                    "type": "basic"
+                },
+                {
+                    "from": {
+                        "key_code": "down_arrow"
+                    },
+                    "conditions": [
+                        {
+                            "name": "play_pause_mode",
+                            "type": "variable_if",
+                            "value": 0
+                        }
+                    ],
+                    "to": [
+                        {
+                            "consumer_key_code": "volume_decrement"
+                        }
+                    ],
+                    "type": "basic"
+                },
+                {
+                    "from": {
+                        "key_code": "down_arrow"
+                    },
+                    "conditions": [
+                        {
+                            "name": "play_pause_mode",
+                            "type": "variable_if",
+                            "value": 1
+                        }
+                    ],
+                    "to": [
+                        {
+                            "consumer_key_code": "play_or_pause"
+                        }
+                    ],
+                    "type": "basic"
+                },
+                {
+                    "from": {
+                        "key_code": "right_arrow"
+                    },
+                    "to_if_alone": [
+                        {
+                            "consumer_key_code": "fast_forward"
+                        }
+                    ],
+                    "type": "basic"
+                },
+                {
+                    "from": {
+                        "key_code": "up_arrow"
+                    },
+                    "to_if_alone": [
+                        {
+                            "consumer_key_code": "volume_increment"
+                        }
+                    ],
+                    "to_if_held_down": [
+                        {
+                            "set_variable": {
+                                "name": "play_pause_mode",
+                                "value": 1
+                            }
+                        }
+                    ],
+                    "to_after_key_up": [
+                        {
+                            "set_variable": {
+                                "name": "play_pause_mode",
+                                "value": 0
+                            }
+                        }
+                    ],
+                    "type": "basic"
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,67 @@
+{
+    "title": "[User] App/Clockify Desktop",
+    "rules": [
+        {
+            "description": "App/Clockify Desktop: Save Entry",
+            "manipulators": [
+                {
+                    "type": "basic",
+                    "from": {
+                        "key_code": "return_or_enter",
+                        "modifiers": {
+                            "mandatory": [
+                                "left_gui"
+                            ]
+                        }
+                    },
+                    "conditions": [
+                        {
+                            "type": "frontmost_application_if",
+                            "description": "Clockify Desktop",
+                            "bundle_identifiers": [
+                                "^coing\\.ClockifyDesktop$"
+                            ]
+                        }
+                    ],
+                    "to": [
+                        {
+                            "shell_command": "/Users/stephancasas/.config/karabiner/scripts/clockify_utils.jxa save"
+                        }
+                    ],
+                    "description": "Command-Enter → 'Save Entry'"
+                }
+            ]
+        },
+        {
+            "description": "App/Clockify Desktop: Discard Entry",
+            "manipulators": [
+                {
+                    "type": "basic",
+                    "from": {
+                        "key_code": "delete_or_backspace",
+                        "modifiers": {
+                            "mandatory": [
+                                "left_gui"
+                            ]
+                        }
+                    },
+                    "conditions": [
+                        {
+                            "type": "frontmost_application_if",
+                            "description": "Clockify Desktop",
+                            "bundle_identifiers": [
+                                "^coing\\.ClockifyDesktop$"
+                            ]
+                        }
+                    ],
+                    "to": [
+                        {
+                            "shell_command": "/Users/stephancasas/.config/karabiner/scripts/clockify_utils.jxa discard"
+                        }
+                    ],
+                    "description": "Command-Delete → 'Discard Entry'"
+                }
+            ]
+        }
+    ]
+}

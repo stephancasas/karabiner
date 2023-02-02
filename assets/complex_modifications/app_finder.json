@@ -1,0 +1,66 @@
+{
+    "title": "[User] App/Finder",
+    "rules": [
+        {
+            "description": "App/Finder: Stale Keys Reassignment",
+            "manipulators": [
+                {
+                    "type": "basic",
+                    "from": {
+                        "key_code": "caps_lock"
+                    },
+                    "conditions": [
+                        {
+                            "type": "frontmost_application_if",
+                            "description": "Finder",
+                            "bundle_identifiers": [
+                                "^com\\.apple\\.finder$"
+                            ]
+                        }
+                    ],
+                    "to": [
+                        {
+                            "shell_command": "/Users/stephancasas/.config/karabiner/scripts/finder_context_click.jxa"
+                        }
+                    ],
+                    "description": "Caps-Lock → 'Context Click Selected Item'"
+                }
+            ]
+        },
+        {
+            "description": "App/Finder: Open With...",
+            "manipulators": [
+                {
+                    "type": "basic",
+                    "from": {
+                        "key_code": "down_arrow",
+                        "modifiers": {
+                            "mandatory": [
+                                "left_shift",
+                                "left_command"
+                            ],
+                            "optional": [
+                                "right_gui"
+                            ]
+                        }
+                    },
+                    "conditions": [
+                        {
+                            "type": "frontmost_application_if",
+                            "description": "Finder",
+                            "bundle_identifiers": [
+                                "^com\\.apple\\.finder$"
+                            ]
+                        }
+                    ],
+                    "to": [
+                        {
+                            "shell_command": "/Users/stephancasas/.config/karabiner/scripts/finder_open_with_alfred.jxa"
+                        }
+                    ],
+                    "description": "Command-Shift-Down → 'Open Selected Item With...'"
+                }
+            ]
+        }
+    ]
+}

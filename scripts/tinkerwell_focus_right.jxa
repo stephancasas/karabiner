@@ -1,0 +1,73 @@
+#!/usr/bin/env osascript -l JavaScript
+
+ObjC.import('Cocoa');
+
+const Cursor = {
+  move: (x, y) => {
+    const event = $.CGEventCreateMouseEvent(
+      $(),
+      $.kCGEventMouseMoved,
+      { x, y },
+      $.kCGMouseButtonLeft,
+    );
+    $.CGEventPost($.kCGHIDEventTap, event);
+    delay(0.01);
+  },
+
+  get position() {
+    const screenH = $.NSScreen.mainScreen.frame.size.height;
+    const pos = $.NSEvent.mouseLocation;
+
+    return {
+      x: parseInt(pos.x),
+      // coordinates need the screen height minus the coordinates obtained
+      y: screenH - Math.trunc(pos.y),
+    };
+  },
+
+  click: (x, y) => {
+    $.CGEventPost(
+      $.kCGHIDEventTap,
+      $.CGEventCreateMouseEvent(
+        $(),
+        $.kCGEventLeftMouseDown,
+        { x, y },
+        $.kCGMouseButtonLeft,
+      ),
+    );
+
+    $.CGEventPost(
+      $.kCGHIDEventTap,
+      $.CGEventCreateMouseEvent(
+        $(),
+        $.kCGEventLeftMouseUp,
+        { x, y },
+        $.kCGMouseButtonLeft,
+      ),
+    );
+
+    delay(0.1);
+  },
+};
+
+function run(argv) {
+  const App = Application.currentApplication();
+  App.includeStandardAdditions = true;
+
+  const {
+    position: [posX, posY],
+	size: [width],
+  } = Application('System Events')
+    .processes.whose({
+      bundleIdentifier: 'de.beyondco.tinkerwell',
+    })
+    .at(0)
+    .windows.at(0)
+    .properties();
+
+  const { x: stashX, y: stashY } = Cursor.position;
+  
+  Cursor.click(posX + width - 150, posY + 300);
+
+  Cursor.move(stashX, stashY);
+}

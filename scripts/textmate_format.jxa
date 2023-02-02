@@ -1,0 +1,76 @@
+#!/usr/bin/env osascript -l JavaScript
+
+function run(argv) {
+  const makeFrontmost = () =>
+    (Application(`System Events`).applicationProcesses.byName(
+      `TextMate`
+    ).frontmost = true);
+
+  const getCurrentLanguageName = () => {
+    makeFrontmost();
+    return Application(`System Events`)
+      .applicationProcesses.byName(`TextMate`)
+      .windows.at(0)
+      .groups.at(0)
+      .popUpButtons.at(1)
+      .attributes.byName('AXValue')
+      .value();
+  };
+
+  const menuCommand = (language) => {
+    makeFrontmost();
+    return {
+      json: {
+        minify: () => {
+          Application(`System Events`)
+            .applicationProcesses.byName(`TextMate`)
+            .menuBars.at(0)
+            .menuBarItems.byName(`Bundles`)
+            .click();
+          Application(`System Events`)
+            .applicationProcesses.byName(`TextMate`)
+            .menuBars.at(0)
+            .menuBarItems.byName(`Bundles`)
+            .menus.byName(`Bundles`)
+            .menuItems.byName(`JSON`)
+            .click();
+          Application(`System Events`)
+            .applicationProcesses.byName(`TextMate`)
+            .menuBars.at(0)
+            .menuBarItems.byName(`Bundles`)
+            .menus.byName(`Bundles`)
+            .menuItems.byName(`JSON`)
+            .menus.byName(`JSON`)
+            .menuItems.at(1)
+            .click();
+        },
+        beautify: () => {
+          Application(`System Events`)
+            .applicationProcesses.byName(`TextMate`)
+            .menuBars.at(0)
+            .menuBarItems.byName(`Bundles`)
+            .click();
+          Application(`System Events`)
+            .applicationProcesses.byName(`TextMate`)
+            .menuBars.at(0)
+            .menuBarItems.byName(`Bundles`)
+            .menus.byName(`Bundles`)
+            .menuItems.byName(`JSON`)
+            .click();
+          Application(`System Events`)
+            .applicationProcesses.byName(`TextMate`)
+            .menuBars.at(0)
+            .menuBarItems.byName(`Bundles`)
+            .menus.byName(`Bundles`)
+            .menuItems.byName(`JSON`)
+            .menus.byName(`JSON`)
+            .menuItems.at(0)
+            .click();
+        }
+      }
+    }[language.toLowerCase()][argv[0].toLowerCase()];
+  };
+
+  menuCommand(getCurrentLanguageName())();
+}
+

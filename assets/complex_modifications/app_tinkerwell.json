@@ -1,0 +1,99 @@
+{
+    "title": "[User] App/Tinkerwell",
+    "rules": [
+        {
+            "description": "App/Tinkerwell: Beautify",
+            "manipulators": [
+                {
+                    "type": "basic",
+                    "from": {
+                        "key_code": "f",
+                        "modifiers": {
+                            "mandatory": [
+                                "left_option",
+                                "left_shift"
+                            ]
+                        }
+                    },
+                    "conditions": [
+                        {
+                            "type": "frontmost_application_if",
+                            "description": "Tinkerwell",
+                            "bundle_identifiers": [
+                                "^de\\.beyondco\\.tinkerwell$"
+                            ]
+                        }
+                    ],
+                    "to": [
+                        {
+                            "shell_command": "/Users/stephancasas/.config/karabiner/scripts/tinkerwell_prettify.jxa"
+                        }
+                    ],
+                    "description": "Option-Shift-F → `Prettify PHP`"
+                }
+            ]
+        },
+        {
+            "description": "App/Tinkerwell: Focus Left",
+            "manipulators": [
+                {
+                    "type": "basic",
+                    "from": {
+                        "key_code": "open_bracket",
+                        "modifiers": {
+                            "mandatory": [
+                                "left_command"
+                            ]
+                        }
+                    },
+                    "conditions": [
+                        {
+                            "type": "frontmost_application_if",
+                            "description": "Tinkerwell",
+                            "bundle_identifiers": [
+                                "^de\\.beyondco\\.tinkerwell$"
+                            ]
+                        }
+                    ],
+                    "to": [
+                        {
+                            "shell_command": "/Users/stephancasas/.config/karabiner/scripts/tinkerwell_focus_left.jxa"
+                        }
+                    ],
+                    "description": "Command+[ → `Focus Left Pane`"
+                }
+            ]
+        },
+        {
+            "description": "App/Tinkerwell: Focus Right",
+            "manipulators": [
+                {
+                    "type": "basic",
+                    "from": {
+                        "key_code": "close_bracket",
+                        "modifiers": {
+                            "mandatory": [
+                                "left_command"
+                            ]
+                        }
+                    },
+                    "conditions": [
+                        {
+                            "type": "frontmost_application_if",
+                            "description": "Tinkerwell",
+                            "bundle_identifiers": [
+                                "^de\\.beyondco\\.tinkerwell$"
+                            ]
+                        }
+                    ],
+                    "to": [
+                        {
+                            "shell_command": "/Users/stephancasas/.config/karabiner/scripts/tinkerwell_focus_right.jxa"
+                        }
+                    ],
+                    "description": "Command+[ → `Focus Right Pane`"
+                }
+            ]
+        }
+    ]
+}

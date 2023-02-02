@@ -1,0 +1,726 @@
+{
+    "title": "[User] Global|HID/MadCatz RAT 8+",
+    "rules": [
+        {
+            "manipulators": [
+                {
+                    "description": "Mission Control: Show App Windows",
+                    "type": "basic",
+                    "from": {
+                        "key_code": "1"
+                    },
+                    "to_if_alone": [
+                        {
+                            "key_code": "down_arrow",
+                            "modifiers": [
+                                "right_control"
+                            ],
+                            "repeat": false
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": 4815,
+                                    "product_id": 3077
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "description": "Misson Control: Show Everything",
+                    "type": "basic",
+                    "from": {
+                        "key_code": "0"
+                    },
+                    "to_if_alone": [
+                        {
+                            "key_code": "up_arrow",
+                            "modifiers": [
+                                "right_control"
+                            ],
+                            "repeat": false
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": 4815,
+                                    "product_id": 3077
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "description": "Mission Control: Navigate Desktop Left",
+                    "type": "basic",
+                    "from": {
+                        "key_code": "1",
+                        "modifiers": {
+                            "optional": [
+                                "left_control",
+                                "right_control"
+                            ]
+                        }
+                    },
+                    "to": [
+                        {
+                            "modifiers": [
+                                "right_control"
+                            ],
+                            "repeat": false,
+                            "key_code": "left_arrow"
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": 4815,
+                                    "product_id": 3077
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "description": "Mission Control: Navigate Desktop Right",
+                    "type": "basic",
+                    "from": {
+                        "key_code": "0",
+                        "modifiers": {
+                            "optional": [
+                                "left_control",
+                                "right_control"
+                            ]
+                        }
+                    },
+                    "to": [
+                        {
+                            "key_code": "right_arrow",
+                            "repeat": false,
+                            "modifiers": [
+                                "right_control"
+                            ]
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": 4815,
+                                    "product_id": 3077
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "description": "Window Server: Show Desktop",
+                    "type": "basic",
+                    "from": {
+                        "key_code": "2"
+                    },
+                    "to_if_alone": [
+                        {
+                            "key_code": "f11",
+                            "repeat": false
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": 4815,
+                                    "product_id": 3077
+                                }
+                            ]
+                        },
+                        {
+                            "type": "variable_if",
+                            "name": "madcatz_modifier",
+                            "value": 0
+                        }
+                    ]
+                },
+                {
+                    "description": "Internet Browser: Go Forward",
+                    "type": "basic",
+                    "from": {
+                        "key_code": "0",
+                        "modifiers": {
+                            "optional": [
+                                "left_gui",
+                                "right_gui"
+                            ]
+                        }
+                    },
+                    "to": [
+                        {
+                            "key_code": "right_arrow",
+                            "repeat": false,
+                            "modifiers": [
+                                "left_gui"
+                            ]
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "type": "frontmost_application_if",
+                            "description": "Internet Browser",
+                            "bundle_identifiers": [
+                                "^com\\.apple\\.Safari$",
+                                "^org\\.mozilla\\.firefox.*$",
+                                "^org\\.mozilla\\.firefox.nightly$",
+                                "^com\\.google\\.Chrome$",
+                                "^org\\.chromium\\.Chromium$",
+                                "^com\\.microsoft\\.edge.*$",
+                                "^com\\.brave\\.Browser$"
+                            ]
+                        },
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": 4815,
+                                    "product_id": 3077
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "description": "Internet Browser: Go Back",
+                    "type": "basic",
+                    "from": {
+                        "key_code": "1",
+                        "modifiers": {
+                            "optional": [
+                                "left_gui",
+                                "right_gui"
+                            ]
+                        }
+                    },
+                    "to": [
+                        {
+                            "key_code": "left_arrow",
+                            "repeat": false,
+                            "modifiers": [
+                                "left_gui"
+                            ]
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "type": "frontmost_application_if",
+                            "description": "Internet Browser",
+                            "bundle_identifiers": [
+                                "^com\\.apple\\.Safari$",
+                                "^org\\.mozilla\\.firefox.*$",
+                                "^org\\.mozilla\\.firefox.nightly$",
+                                "^com\\.google\\.Chrome$",
+                                "^org\\.chromium\\.Chromium$",
+                                "^com\\.microsoft\\.edge.*$",
+                                "^com\\.brave\\.Browser$"
+                            ]
+                        },
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": 4815,
+                                    "product_id": 3077
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "description": "FileMaker Pro: Zoom Out",
+                    "type": "basic",
+                    "from": {
+                        "key_code": "1",
+                        "modifiers": {
+                            "optional": [
+                                "left_gui",
+                                "right_gui"
+                            ]
+                        }
+                    },
+                    "to": [
+                        {
+                            "key_code": "hyphen",
+                            "repeat": false,
+                            "modifiers": [
+                                "left_gui"
+                            ]
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "type": "frontmost_application_if",
+                            "description": "FileMaker Pro",
+                            "bundle_identifiers": [
+                                "^com\\.filemaker\\.client\\.pro12$"
+                            ]
+                        },
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": 4815,
+                                    "product_id": 3077
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "description": "FileMaker Pro: Zoom In",
+                    "type": "basic",
+                    "from": {
+                        "key_code": "0",
+                        "modifiers": {
+                            "optional": [
+                                "left_gui",
+                                "right_gui"
+                            ]
+                        }
+                    },
+                    "to": [
+                        {
+                            "key_code": "equal_sign",
+                            "repeat": false,
+                            "modifiers": [
+                                "left_gui"
+                            ]
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "type": "frontmost_application_if",
+                            "description": "FileMaker Pro",
+                            "bundle_identifiers": [
+                                "^com\\.filemaker\\.client\\.pro12$"
+                            ]
+                        },
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": 4815,
+                                    "product_id": 3077
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "description": "Precision Mode: Set Arrows XY False",
+                    "type": "basic",
+                    "from": {
+                        "key_code": "a"
+                    },
+                    "to": [
+                        {
+                            "set_variable": {
+                                "name": "madcatz_arrows_xy",
+                                "value": 0
+                            }
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": 4815,
+                                    "product_id": 3077
+                                }
+                            ]
+                        },
+                        {
+                            "type": "variable_if",
+                            "name": "madcatz_arrows_xy",
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "description": "Precision Mode: Set Arrows XY True",
+                    "type": "basic",
+                    "from": {
+                        "key_code": "a"
+                    },
+                    "to": [
+                        {
+                            "set_variable": {
+                                "name": "madcatz_arrows_xy",
+                                "value": 1
+                            }
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": 4815,
+                                    "product_id": 3077
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "description": "Precision Mode: Down Arrow Use XY Mod",
+                    "type": "basic",
+                    "from": {
+                        "key_code": "down_arrow"
+                    },
+                    "to": [
+                        {
+                            "key_code": "down_arrow"
+                        },
+                        {
+                            "key_code": "left_arrow"
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": 4815,
+                                    "product_id": 3077
+                                }
+                            ]
+                        },
+                        {
+                            "type": "variable_if",
+                            "name": "madcatz_arrows_xy",
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "description": "Precision Mode: Up Arrow Use XY Mod",
+                    "type": "basic",
+                    "from": {
+                        "key_code": "up_arrow"
+                    },
+                    "to": [
+                        {
+                            "key_code": "up_arrow"
+                        },
+                        {
+                            "key_code": "right_arrow"
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": 4815,
+                                    "product_id": 3077
+                                }
+                            ]
+                        },
+                        {
+                            "type": "variable_if",
+                            "name": "madcatz_arrows_xy",
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "description": "Precision Mode: Left Arrow Use XY Mod",
+                    "type": "basic",
+                    "from": {
+                        "key_code": "left_arrow"
+                    },
+                    "to": [
+                        {
+                            "key_code": "left_arrow"
+                        },
+                        {
+                            "key_code": "up_arrow"
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": 4815,
+                                    "product_id": 3077
+                                }
+                            ]
+                        },
+                        {
+                            "type": "variable_if",
+                            "name": "madcatz_arrows_xy",
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "description": "Precision Mode: Right Arrow Use XY Mod",
+                    "type": "basic",
+                    "from": {
+                        "key_code": "right_arrow"
+                    },
+                    "to": [
+                        {
+                            "key_code": "right_arrow"
+                        },
+                        {
+                            "key_code": "down_arrow"
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": 4815,
+                                    "product_id": 3077
+                                }
+                            ]
+                        },
+                        {
+                            "type": "variable_if",
+                            "name": "madcatz_arrows_xy",
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "description": "Precision Aim Button as Modifier",
+                    "type": "basic",
+                    "from": {
+                        "key_code": "3"
+                    },
+                    "to_if_held_down": [
+                        {
+                            "set_variable": {
+                                "name": "madcatz_modifier",
+                                "value": 1
+                            }
+                        }
+                    ],
+                    "to_after_key_up": [
+                        {
+                            "set_variable": {
+                                "name": "madcatz_modifier",
+                                "value": 0
+                            }
+                        }
+                    ],
+                    "to_if_alone": [
+                        {
+                            "set_variable": {
+                                "name": "madcatz_modifier",
+                                "value": 1
+                            }
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": 4815,
+                                    "product_id": 3077
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "description": "Precision Aim Modifier: Use Left Click as Command-V",
+                    "type": "basic",
+                    "from": {
+                        "pointing_button": "button1"
+                    },
+                    "to": [
+                        {
+                            "repeat": true,
+                            "key_code": "v",
+                            "modifiers": [
+                                "left_gui"
+                            ]
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": 4815,
+                                    "product_id": 3077
+                                }
+                            ]
+                        },
+                        {
+                            "type": "variable_if",
+                            "name": "madcatz_modifier",
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "description": "Precision Aim Modifier: Use Right Click as Command-C",
+                    "type": "basic",
+                    "from": {
+                        "pointing_button": "button2"
+                    },
+                    "to": [
+                        {
+                            "repeat": true,
+                            "key_code": "c",
+                            "modifiers": [
+                                "left_gui"
+                            ]
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": 4815,
+                                    "product_id": 3077
+                                }
+                            ]
+                        },
+                        {
+                            "type": "variable_if",
+                            "name": "madcatz_modifier",
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "description": "Precision Aim Modifier: Use Scroll Click as Command-X",
+                    "type": "basic",
+                    "from": {
+                        "pointing_button": "button3"
+                    },
+                    "to": [
+                        {
+                            "repeat": true,
+                            "key_code": "x",
+                            "modifiers": [
+                                "left_gui"
+                            ]
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": 4815,
+                                    "product_id": 3077
+                                }
+                            ]
+                        },
+                        {
+                            "type": "variable_if",
+                            "name": "madcatz_modifier",
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "description": "Precision Aim Modifier: Use Show Desktop as Numpad Enter",
+                    "type": "basic",
+                    "from": {
+                        "key_code": "2"
+                    },
+                    "to": [
+                        {
+                            "repeat": true,
+                            "key_code": "keypad_enter"
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": 4815,
+                                    "product_id": 3077
+                                }
+                            ]
+                        },
+                        {
+                            "type": "variable_if",
+                            "name": "madcatz_modifier",
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "description": "Precision Aim Modifier: F-'PrecisionAim' → Command-Delete",
+                    "type": "basic",
+                    "from": {
+                        "key_code": "f"
+                    },
+                    "to": [
+                        {
+                            "repeat": false,
+                            "key_code": "delete_or_backspace",
+                            "modifiers": [
+                                "left_gui"
+                            ]
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "type": "variable_if",
+                            "name": "madcatz_modifier",
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "description": "Precision Aim Modifier: D-'PrecisionAim' → Command-Option-Delete",
+                    "type": "basic",
+                    "from": {
+                        "key_code": "d"
+                    },
+                    "to": [
+                        {
+                            "repeat": false,
+                            "key_code": "delete_or_backspace",
+                            "modifiers": [
+                                "left_gui",
+                                "left_option"
+                            ]
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "type": "variable_if",
+                            "name": "madcatz_modifier",
+                            "value": 1
+                        }
+                    ]
+                }
+            ],
+            "description": "Global|HID/MadCatz RAT 8+: Aux. Buttons Assignments"
+        }
+    ]
+}

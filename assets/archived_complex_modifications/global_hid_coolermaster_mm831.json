@@ -1,0 +1,234 @@
+{
+    "title": "[User] Global|HID/CoolerMaster MM831",
+    "rules": [
+        {
+            "description": "Global|HID/CoolerMaster MM831",
+            "manipulators": [
+                {
+                    "type": "basic",
+                    "from": {
+                        "consumer_key_code": "scan_previous_track"
+                    },
+                    "to_if_alone": [
+                        {
+                            "key_code": "down_arrow",
+                            "modifiers": [
+                                "right_control"
+                            ],
+                            "repeat": false
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": 9494,
+                                    "product_id": 317
+                                }
+                            ]
+                        }
+                    ],
+                    "description": "ScanPreviousTrack → Control-Down"
+                },
+                {
+                    "type": "basic",
+                    "from": {
+                        "consumer_key_code": "scan_next_track"
+                    },
+                    "to_if_alone": [
+                        {
+                            "key_code": "up_arrow",
+                            "modifiers": [
+                                "right_control"
+                            ],
+                            "repeat": false
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": 9494,
+                                    "product_id": 317
+                                }
+                            ]
+                        }
+                    ],
+                    "description": "ScanNextTrack → Control-Up"
+                },
+                {
+                    "type": "basic",
+                    "from": {
+                        "consumer_key_code": "scan_previous_track",
+                        "modifiers": {
+                            "optional": [
+                                "left_control",
+                                "right_control"
+                            ]
+                        }
+                    },
+                    "to": [
+                        {
+                            "modifiers": [
+                                "right_control"
+                            ],
+                            "repeat": false,
+                            "key_code": "left_arrow"
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": 9494,
+                                    "product_id": 317
+                                }
+                            ]
+                        }
+                    ],
+                    "description": "ScanPreviousTrack-Control → Control-Left"
+                },
+                {
+                    "type": "basic",
+                    "from": {
+                        "consumer_key_code": "scan_next_track",
+                        "modifiers": {
+                            "optional": [
+                                "left_control",
+                                "right_control"
+                            ]
+                        }
+                    },
+                    "to": [
+                        {
+                            "key_code": "right_arrow",
+                            "repeat": false,
+                            "modifiers": [
+                                "right_control"
+                            ]
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": 9494,
+                                    "product_id": 317
+                                }
+                            ]
+                        }
+                    ],
+                    "description": "Control-ScanNextTrack → Control-Right"
+                },
+                {
+                    "type": "basic",
+                    "from": {
+                        "consumer_key_code": "play_or_pause"
+                    },
+                    "to_if_alone": [
+                        {
+                            "key_code": "f11",
+                            "repeat": false
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": 9494,
+                                    "product_id": 317
+                                }
+                            ]
+                        }
+                    ],
+                    "description": "PlayOrPause → 'Show Desktop'"
+                },
+                {
+                    "type": "basic",
+                    "from": {
+                        "consumer_key_code": "scan_next_track",
+                        "modifiers": {
+                            "optional": [
+                                "left_gui",
+                                "right_gui"
+                            ]
+                        }
+                    },
+                    "to": [
+                        {
+                            "key_code": "right_arrow",
+                            "repeat": false,
+                            "modifiers": [
+                                "left_gui"
+                            ]
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "type": "frontmost_application_if",
+                            "description": "Safari",
+                            "bundle_identifiers": [
+                                "^com\\.apple\\.Safari$"
+                            ]
+                        },
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": 9494,
+                                    "product_id": 317
+                                }
+                            ]
+                        }
+                    ],
+                    "description": "[Safari] Command-ScanNextTrack → Command-Right"
+                },
+                {
+                    "type": "basic",
+                    "from": {
+                        "consumer_key_code": "scan_previous_track",
+                        "modifiers": {
+                            "optional": [
+                                "left_gui",
+                                "right_gui"
+                            ]
+                        }
+                    },
+                    "to": [
+                        {
+                            "key_code": "left_arrow",
+                            "repeat": false,
+                            "modifiers": [
+                                "left_gui"
+                            ]
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "type": "frontmost_application_if",
+                            "description": "Safari",
+                            "bundle_identifiers": [
+                                "^com\\.apple\\.Safari$"
+                            ]
+                        },
+                        {
+                            "type": "device_if",
+                            "identifiers": [
+                                {
+                                    "vendor_id": 9494,
+                                    "product_id": 317
+                                }
+                            ]
+                        }
+                    ],
+                    "description": "[Safari] Command-ScanPreviousTrack → Command-Left"
+                }
+            ]
+        }
+    ]
+}

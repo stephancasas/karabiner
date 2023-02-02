@@ -1,0 +1,75 @@
+{
+    "title": "[User] App/VS Code",
+    "rules": [
+        {
+            "description": "App/VS Code: Stale Key Reassignment",
+            "manipulators": [
+                {
+                    "type": "basic",
+                    "from": {
+                        "key_code": "caps_lock",
+                        "modifiers": {
+                            "optional": [
+                                "any"
+                            ]
+                        }
+                    },
+                    "conditions": [
+                        {
+                            "type": "frontmost_application_if",
+                            "description": "Visual Studio Code",
+                            "bundle_identifiers": [
+                                "^com\\.microsoft\\.VSCode$"
+                            ]
+                        }
+                    ],
+                    "to_if_alone": [
+                        {
+                            "modifiers": [
+                                "left_gui",
+                                "left_shift"
+                            ],
+                            "key_code": "p"
+                        }
+                    ],
+                    "description": "Caps Lock → 'Command Pallette'"
+                },
+                {
+                    "type": "basic",
+                    "from": {
+                        "key_code": "right_shift",
+                        "modifiers": {
+                            "optional": [
+                                "any"
+                            ]
+                        }
+                    },
+                    "conditions": [
+                        {
+                            "type": "frontmost_application_if",
+                            "description": "Visual Studio Code",
+                            "bundle_identifiers": [
+                                "^com\\.microsoft\\.VSCode$"
+                            ]
+                        },
+                        {
+                            "name": "cmd_arrows_mode",
+                            "type": "variable_if",
+                            "value": 1
+                        }
+                    ],
+                    "to_if_held_down": [
+                        {
+                            "key_code": "left_control",
+                            "modifiers": [
+                                "left_option"
+                            ],
+                            "repeat": true
+                        }
+                    ],
+                    "description": "Right Shift → 'Traverse Camel/Snake'"
+                }
+            ]
+        }
+    ]
+}

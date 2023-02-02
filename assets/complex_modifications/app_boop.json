@@ -1,0 +1,39 @@
+{
+    "title": "[User] App/Boop",
+    "rules": [
+        {
+            "description": "App/Boop: Normalization",
+            "manipulators": [
+                {
+                    "type": "basic",
+                    "from": {
+                        "key_code": "caps_lock",
+                        "modifiers": {
+                            "optional": [
+                                "any"
+                            ]
+                        }
+                    },
+                    "conditions": [
+                        {
+                            "type": "frontmost_application_if",
+                            "description": "Boop",
+                            "bundle_identifiers": [
+                                "^com\\.okatbest\\.boop$"
+                            ]
+                        }
+                    ],
+                    "to": [
+                        {
+                            "modifiers": [
+                                "left_gui"
+                            ],
+                            "key_code": "b"
+                        }
+                    ],
+                    "description": "Caps Lock → 'Command Palette'"
+                }
+            ]
+        }
+    ]
+}

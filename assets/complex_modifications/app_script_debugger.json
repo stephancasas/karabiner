@@ -1,0 +1,99 @@
+{
+    "title": "[User] App/Script Debugger",
+    "rules": [
+        {
+            "description": "App/Script Debugger: Normalization",
+            "manipulators": [
+                {
+                    "type": "basic",
+                    "from": {
+                        "key_code": "f",
+                        "modifiers": {
+                            "mandatory": [
+                                "left_option",
+                                "left_shift"
+                            ]
+                        }
+                    },
+                    "conditions": [
+                        {
+                            "type": "frontmost_application_if",
+                            "description": "Script Editor",
+                            "bundle_identifiers": [
+                                "^com\\.latenightsw\\.ScriptDebugger8$"
+                            ]
+                        }
+                    ],
+                    "to": [
+                        {
+                            "modifiers": [
+                                "left_gui"
+                            ],
+                            "key_code": "k"
+                        }
+                    ],
+                    "description": "'VSCode Format Keys' → `Compile`"
+                },
+                {
+                    "type": "basic",
+                    "from": {
+                        "key_code": "s",
+                        "modifiers": {
+                            "mandatory": [
+                                "left_gui"
+                            ]
+                        }
+                    },
+                    "conditions": [
+                        {
+                            "type": "frontmost_application_if",
+                            "description": "Script Editor",
+                            "bundle_identifiers": [
+                                "^com\\.latenightsw\\.ScriptDebugger8$"
+                            ]
+                        }
+                    ],
+                    "to": [
+                        {
+                            "modifiers": [
+                                "left_gui"
+                            ],
+                            "key_code": "r"
+                        }
+                    ],
+                    "description": "Command-S → `Run`"
+                },
+                {
+                    "type": "basic",
+                    "from": {
+                        "key_code": "s",
+                        "modifiers": {
+                            "mandatory": [
+                                "left_gui",
+                                "left_shift"
+                            ]
+                        }
+                    },
+                    "conditions": [
+                        {
+                            "type": "frontmost_application_if",
+                            "description": "Script Editor",
+                            "bundle_identifiers": [
+                                "^com\\.latenightsw\\.ScriptDebugger8$"
+                            ]
+                        }
+                    ],
+                    "to": [
+                        {
+                            "modifiers": [
+                                "left_gui"
+                            ],
+                            "key_code": "s"
+                        }
+                    ],
+                    "description": "Command-Shift-S → `Save`"
+                }
+            ]
+        }
+    ]
+}

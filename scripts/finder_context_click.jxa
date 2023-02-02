@@ -1,0 +1,193 @@
+#!/usr/bin/env osascript -l JavaScript
+
+function run(argv) {
+  // make objective-c bridge available
+  ObjC.import('Cocoa');
+  const nil = $();
+
+  /**
+   * Get the authoritative user application context.
+   * @returns Context
+   */
+  function ctx() {
+    const app = Application.currentApplication();
+    app.includeStandardAdditions = true;
+    return app;
+  }
+
+  /**
+   * Get an application process by its name.
+   * @param {string} processName By name, the application process to resolve.
+   * @returns ApplicationProcess
+   */
+  function process(processName) {
+    return Application('System Events').applicationProcesses.byName(
+      processName,
+    );
+  }
+
+  /**
+   * Execute a command in the shell, using the paths and environment variables
+   * available to the current user's session.
+   * @param cmd The command to execute.
+   * @returns string | boolean
+   * @requires ctx()
+   */
+  function exec(...cmd) {
+    const paths = ctx()
+      .doShellScript(`cat /etc/paths`)
+      .split('\r')
+      .map((path) => `export PATH="${path}:$PATH"`)
+      .join(';');
+
+    try {
+      return ctx().doShellScript(`${paths}; source ~/.zshrc; ${cmd.join(' ')}`);
+    } catch (ex) {
+      return false;
+    }
+  }
+
+  /**
+   * Perform a synchronous/blocking fetch operation.
+   * @param url The url to read.
+   * @returns string
+   * @requires ctx()
+   * @requires exec()
+   */
+  function fetchSync(url) {
+    return ctx().exec(`curl "${url}"`);
+  }
+
+  /**
+   * Interactive cursor support via the JXA Objective-C bridge.
+   */
+  const Cursor = {
+    restoreTo: { x: 0, y: 0 },
+    getPosition: (actual = false) => {
+      let { x, y } = $.NSEvent.mouseLocation;
+      const screenH = $.NSScreen.mainScreen.frame.size.height;
+      y = !actual ? screenH - y : y;
+
+      return { x, y };
+    },
+    setRestore: () => (Cursor.restoreTo = Cursor.getPosition()),
+    restore: () => {
+      const { x, y } = Cursor.restoreTo;
+      Cursor.setPosition(x, y, { x: 0, y: 0 });
+    },
+    setPosition: (x, y, offset = { x: 8, y: 8 }) => {
+      x += offset ? (offset.x ? offset.x : 0) : 0;
+      y += offset ? (offset.y ? offset.y : 0) : 0;
+      Cursor.btnEvent('left', 'up', x, y);
+      delay(0.1);
+      return Cursor;
+    },
+    click: (btn = 'left') => {
+      const { x, y } = Cursor.getPosition();
+
+      Cursor.btnEvent(btn, 'down', x, y);
+      Cursor.btnEvent(btn, 'up', x, y);
+    },
+    btnEvent: (button = 'left', direction = 'down', x, y) => {
+      const [btn, dir] = [button, direction].map(
+        (x) => `${x[0].toUpperCase()}${[...x].slice(1).join('').toLowerCase()}`,
+      );
+
+      const evt = $.CGEventCreateMouseEvent(
+        nil,
+        $[`kCGEvent${btn}Mouse${dir}`],
+        { x, y },
+        nil,
+      );
+
+      $.CGEventPost($.kCGHIDEventTap, evt);
+    },
+  };
+
+  const Path = {
+    resolve: (...args) => {
+      const loc = args
+        .map((arg, i) => {
+          if (arg[0] === '/' && i !== 0) {
+            arg = arg.replace('/', '');
+          }
+          if ([...arg].slice(-1) === '/') {
+            arg = [...[...arg].reverse().join('').replace('/', '')]
+              .reverse()
+              .join('');
+          }
+          return arg;
+        })
+        .join('/');
+      return loc[0] === '~' ? loc.replace('~', Path.HOME) : loc;
+    },
+    get HOME() {
+      return `/Users/${ctx().doShellScript('whoami')}`;
+    },
+  };
+
+  /**
+   * File reading, writing, and deleting.
+   */
+  const File = {
+    read: (fpath) => exec('cat', Path.resolve(fpath)),
+    write: (fpath, data) => {
+      data = data.replace(/\\/g, '\\\\$&').replace(/"/g, '\\$&');
+      return exec('printf', `"${data}"`, '>', Path.resolve(fpath));
+    },
+    delete: (fpath) => exec('rm', '-rf', fpath),
+    exists: (fpath) =>
+      typeof exec('test', '-f', `"${Path.resolve(fpath)}"`) === 'string',
+    mkdir: (fpath) => exec('mkdir', `"${Path.resolve(fpath)}"`),
+  };
+
+  const getCurrentFinderContext = () => {
+  const sel = Application('Finder').selection();
+  return sel.length
+    ? sel[0].properties().desktopPosition
+      ? 'desktop'
+      : 'window'
+    : false;
+};
+
+const getDesktopUiSelection = () =>
+  process('Finder')
+    .scrollAreas.at(0)
+    .groups.at(0)
+    .images.whose({ selected: true })
+    .at(0)
+    .attributes.byName('AXPosition')
+    .value();
+
+// testing for when in columnar/panelized mode -- add this later
+//Application("System Events").applicationProcesses.byName("Finder").windows.at(0).splitterGroups.at(0).splitterGroups.at(0).browsers.at(0).scrollAreas.at(0).scrollAreas.at(0).lists.at(0).groups.at(4).textFields.whose({value: 'defer-fm'})();
+
+const getWindowUiSelection = () =>
+  process('Finder')
+    .windows.at(0)
+    .splitterGroups.at(0)
+    .splitterGroups.at(0)
+    .scrollAreas.at(0)
+    .outlines.at(0)
+    .rows.whose({ selected: true })
+    .at(0)
+    .attributes.byName('AXPosition')
+    .value();
+
+function run(argv) {
+  const context = getCurrentFinderContext();
+  if (!context) return;
+
+  process('Finder').frontmost = true;
+
+  const [x, y] =
+    context === 'desktop' ? getDesktopUiSelection() : getWindowUiSelection();
+
+  Cursor.setRestore();
+  Cursor.setPosition(x, y).click('right');
+  Cursor.restore();
+}
+
+
+  return run(argv);
+}

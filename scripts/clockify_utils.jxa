@@ -1,0 +1,81 @@
+#!/usr/bin/env osascript -l JavaScript
+
+function run(argv) {
+  // if this breaks in production, remove the advanced destructured arguments
+
+  const WaitForWindowByName = (processName, windowName) => {
+    let timeout = 20,
+      frontmost = false,
+      exit = 0,
+      window;
+
+    while (!window) {
+      try {
+        window = Application('System Events')
+          .applicationProcesses.byName(processName)
+          .windows.byName(windowName);
+        window = window();
+        // jxa will try to assign the process name as the app name
+        // this will break for applications which share process names
+        // (e.g. Firefox and Firefox Developer Edition)
+        window = Application('System Events')
+          .applicationProcesses.byName(processName)
+          .windows.byName(windowName);
+      } catch (ex) {
+        window = false;
+      }
+
+      exit++;
+      if (exit > timeout) return window;
+
+      delay(0.5);
+    }
+
+    if (frontmost) {
+      window.actions.byName('AXRaise').perform();
+      Application(processName).activate();
+    }
+
+    return window;
+  };
+
+  const $window = WaitForWindowByName('Clockify Desktop', 'Clockify');
+
+  const getPopover = () => {
+    let popover;
+    try {
+      popover = $window.groups.at(0).popOvers.at(0);
+    } catch (ex) {
+      popover = false;
+    }
+    return popover;
+  };
+
+  const getDetailsEntryItem = () => {
+    let item;
+    try {
+      item = $window.groups.at(0).staticTexts.byName('No project yet');
+    } catch (ex) {
+      item = false;
+    }
+    return item;
+  };
+
+  const ACTIONS = {
+    save() {
+      let popover = getPopover();
+      if (!popover) return;
+      popover.buttons.byName('Save').click();
+      return true;
+    },
+    discard() {
+      const button = getDetailsEntryItem();
+      if (!button) return;
+
+      return button.actions.byName('AXPress').perform();
+    },
+  };
+
+  if (!argv) return;
+  return ACTIONS[argv]();
+}
