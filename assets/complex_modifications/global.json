@@ -283,6 +283,22 @@
                     ]
                 }
             ]
+        },
+        {
+            "description": "Restore F11 Factory Function",
+            "manipulators": [
+                {
+                    "type": "basic",
+                    "from": {
+                        "key_code": "f11"
+                    },
+                    "to_if_alone": [
+                        {
+                            "key_code": "f19"
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }
