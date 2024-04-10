@@ -1,0 +1,36 @@
+{
+    "title": "[User] App/Xcode",
+    "rules": [
+        {
+            "description": "App/Xcode: Stale Key Reassignment",
+            "manipulators": [
+                {
+                    "type": "basic",
+                    "from": {
+                        "key_code": "caps_lock",
+                        "modifiers": {
+                            "optional": [
+                                "any"
+                            ]
+                        }
+                    },
+                    "conditions": [
+                        {
+                            "type": "frontmost_application_if",
+                            "description": "Xcode",
+                            "bundle_identifiers": [
+                                "^com\\.apple\\.dt\\.Xcode$"
+                            ]
+                        }
+                    ],
+                    "to_if_alone": [
+                        {
+                            "shell_command": "osascript -l JavaScript -e 'Application(`Alfred`).runTrigger(`xcodepalette`, {inWorkflow: `com.stephancasas.AlfredXcodeMissingCommandPalette`,});'"
+                        }
+                    ],
+                    "description": "Caps Lock → 'Command Pallette'"
+                }
+            ]
+        }
+    ]
+}

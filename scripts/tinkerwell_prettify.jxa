@@ -1,18 +1,82 @@
 #!/usr/bin/env osascript -l JavaScript
+const $attr = Ref();
+const $windows = Ref();
+const $children = Ref();
 
 function run(_) {
-  const tinkerwell =
-    Application('System Events').applicationProcesses.byName('Tinkerwell');
+  const nsRunningApp =
+    $.NSRunningApplication.runningApplicationsWithBundleIdentifier(
+      'de.beyondco.tinkerwell',
+    ).firstObject;
 
-  tinkerwell.frontmost = true;
+  if (nsRunningApp.isNil()) return 1;
 
-  const actionMenuItem = tinkerwell.menuBars
-    .at(0)
-    .menuBarItems.byName('Action');
-  const actionMenu = actionMenuItem.menus.at(0);
-  const prettify = actionMenu.menuItems.byName('Prettify PHP');
+  const axApp = $.AXUIElementCreateApplication(nsRunningApp.processIdentifier);
 
-  actionMenuItem.click();
-  prettify.click();
+  const $menuBar = Ref();
+  if ($.AXUIElementCopyAttributeValue(axApp, 'AXMenuBar', $menuBar) != 0)
+    return 1;
+
+  const prettifyMenuItem = AXUIElementTraverseHierarchy(
+    $menuBar[0],
+    ['AXTitle', 'AXChildren'],
+    ({ AXTitle }) => AXTitle == 'Prettify PHP',
+  );
+  if (!prettifyMenuItem) return 1;
+
+  $.AXUIElementPerformAction(prettifyMenuItem, 'AXPress');
+
+  return 0;
 }
 
+/**
+ * Traverse the hierarchy tree of the given element to find the first element whose collected attributes match the given callback condition.
+ * @param {AXUIElement} element The element whose hierarchy tree should be traversed.
+ * @param {Array<string>} attributes The element attributes which should be included in the hierarchy query.
+ * @param {Function} condition A callback which receives each hierarchy-included element's attributes as a JS object and returns a boolean value.
+ * @returns {Optional<AXUIElement>}
+ */
+function AXUIElementTraverseHierarchy(element, attributes, condition) {
+  if (typeof $.AXUIElementCopyHierarchy != 'function') {
+    ObjC.bindFunction('AXUIElementCopyHierarchy', [
+      'int',
+      ['id', 'id', 'int', 'id*'],
+    ]);
+  }
+
+  const kAXValueKey = 'value';
+
+  const $hierarchy = Ref();
+  if ($.AXUIElementCopyHierarchy(element, attributes, 0, $hierarchy)) {
+    return false;
+  }
+
+  let outElement;
+  const callback = (element, attrDict, stopFlag) => {
+    // Make JS-friendly object from attributes dictionary.
+    let attrJSObject = ObjC.deepUnwrap(attrDict);
+    attrJSObject = Object.keys(attrJSObject).reduce((acc, cur) => {
+      acc[cur] = attrJSObject[cur][kAXValueKey];
+      return acc;
+    }, {});
+
+    if (condition(attrJSObject)) {
+      outElement = element;
+      stopFlag[0] = true;
+    }
+  };
+  $hierarchy[0].enumerateKeysAndObjectsWithOptionsUsingBlock(0, callback);
+
+  return outElement;
+}
+
+// prettier-ignore
+(() => {
+ObjC.import('Cocoa'); // yes, it's necessary -- stop telling me it isn't
+
+ObjC.bindFunction('AXUIElementPerformAction', ['int', ['id', 'id']]);
+ObjC.bindFunction('AXValueCreate', ['id', ['unsigned int', 'void*']]);
+ObjC.bindFunction('AXUIElementCreateApplication', ['id', ['unsigned int']]);
+ObjC.bindFunction('AXUIElementSetAttributeValue', ['int', ['id', 'id', 'id']]);
+ObjC.bindFunction('AXUIElementCopyAttributeValue',['int', ['id', 'id', 'id*']]);
+})();
